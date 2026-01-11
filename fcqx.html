@@ -1,0 +1,1771 @@
+
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCQ - ආයෝජන යෙදුම</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 15px;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Auth Buttons */
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            z-index: -1;
+            transition: opacity 0.3s;
+            opacity: 1;
+        }
+
+        .btn:hover::before {
+            opacity: 0.8;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #38bdf8;
+            border: 2px solid #0ea5e9;
+        }
+
+        .btn-secondary::before {
+            opacity: 0;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        /* Notification Banner */
+        .notification-banner {
+            background: linear-gradient(90deg, #0c4a6e, #075985);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2);
+        }
+
+        .notification-scroll {
+            display: flex;
+            animation: scroll 15s linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .notification-item {
+            padding: 0 30px;
+            font-size: 14px;
+        }
+
+        /* Balance Card */
+        .balance-card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(2, 132, 199, 0.2);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+            animation: pulse 4s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .balance-amount {
+            font-size: 36px;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        .balance-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        /* Quick Buttons */
+        .quick-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .quick-btn {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, transparent 100%);
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .quick-btn:hover::before {
+            opacity: 1;
+        }
+
+        .quick-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(2, 132, 199, 0.3);
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+
+        .quick-btn-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quick-btn-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Investment Plans */
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #38bdf8;
+        }
+
+        .investment-plans {
+            margin-bottom: 20px;
+        }
+
+        .plan-card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.1);
+            transition: all 0.3s;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(2, 132, 199, 0.3);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .plan-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .plan-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-right: 15px;
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+        }
+
+        .plan-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .plan-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .plan-stat {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+        }
+
+        .plan-stat-label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .plan-stat-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .plan-price {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-price::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .plan-price:hover::before {
+            transform: translateX(100%);
+        }
+
+        .plan-price:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -4px 20px rgba(2, 132, 199, 0.3);
+            z-index: 1000;
+            border-top: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-item.active {
+            color: #38bdf8;
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: #38bdf8;
+            border-radius: 2px;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+            transition: transform 0.3s;
+        }
+
+        .nav-item:hover .nav-icon {
+            transform: translateY(-3px);
+        }
+
+        .nav-text {
+            font-size: 12px;
+            color: #e2e8f0;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Investment Page */
+        .investment-header {
+            background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.3);
+        }
+
+        .investment-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background: rgba(15, 23, 42, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .summary-label {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .summary-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        /* Order Card */
+        .order-card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .order-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .order-number {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .order-status {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            box-shadow: 0 2px 5px rgba(16, 185, 129, 0.3);
+        }
+
+        .order-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .order-detail {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+        }
+
+        .order-detail-label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 3px;
+        }
+
+        .order-detail-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        /* Profile Page */
+        .profile-header {
+            background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.3);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .profile-stat {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .menu-list {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.1);
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:hover {
+            background: rgba(30, 41, 59, 0.7);
+            padding-left: 25px;
+        }
+
+        .menu-icon {
+            margin-right: 10px;
+            color: #38bdf8;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            box-shadow: 0 10px 40px rgba(2, 132, 199, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #38bdf8;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            color: #e2e8f0;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .file-upload input[type=file] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 12px;
+            background: rgba(30, 41, 59, 0.7);
+            border: 2px dashed rgba(56, 189, 248, 0.3);
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+            color: #94a3b8;
+        }
+
+        .file-upload:hover .file-upload-label {
+            border-color: #38bdf8;
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        /* Copy Button */
+        .copy-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .copy-text {
+            flex: 1;
+            padding: 10px;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 8px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+
+        .copy-btn {
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(2, 132, 199, 0.3);
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.4);
+        }
+
+        /* Telegram Button */
+        .telegram-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.4);
+            transition: all 0.3s;
+            z-index: 999;
+            animation: float 3s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .telegram-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(2, 132, 199, 0.5);
+        }
+
+        /* Success Message */
+        .success-message {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            display: none;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            animation: slideIn 0.5s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+                padding-bottom: 80px;
+            }
+
+            .balance-amount {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+                color: #e2e8f0;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>💰 FCQ</h1>
+            <p>ඔබේ විශ්වාසනීය ආයෝජන සහකරු</p>
+        </div>
+
+        <!-- Auth Buttons -->
+        <div class="auth-buttons">
+            <button class="btn btn-secondary" onclick="showModal('loginModal')">පුරනය වන්න</button>
+            <button class="btn btn-primary" onclick="showModal('signupModal')">ලියාපදිංචි වන්න</button>
+        </div>
+
+        <!-- Notification Banner -->
+        <div class="notification-banner">
+            <div class="notification-scroll">
+                <span class="notification-item">🎉 සුභ පැතුම්! 075****002 Rs135 ආදායමක් ලබාගත්තා</span>
+                <span class="notification-item">💎 FCQ 02 ආයෝජන සැලැස්ම දැන් තිබේ</span>
+                <span class="notification-item">🎁 නව සාමාජිකයින්ට Rs200 බෝනස්!</span>
+            </div>
+        </div>
+
+        <!-- Main Pages -->
+        <div id="homePage" class="page active">
+            <!-- Balance Card -->
+            <div class="balance-card">
+                <div class="balance-amount">රු.<span id="balance">0</span></div>
+                <div class="balance-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">ආයෝජන ආදායම</div>
+                        <div class="stat-value">රු.<span id="investmentReturn">0</span></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">යොමු ආදායම</div>
+                        <div class="stat-value">රු.<span id="referralIncome">0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Buttons -->
+            <div class="quick-buttons">
+                <div class="quick-btn" onclick="showModal('referralModal')">
+                    <div class="quick-btn-icon">🔗</div>
+                    <div class="quick-btn-text">යොමු වැඩසටහන</div>
+                </div>
+                <div class="quick-btn" onclick="showModal('aboutModal')">
+                    <div class="quick-btn-icon">ℹ️</div>
+                    <div class="quick-btn-text">අපි ගැන</div>
+                </div>
+            </div>
+
+            <!-- Investment Plans -->
+            <div class="investment-plans">
+                <h2 class="section-title">LUMI ආයෝජන සැලසුම්</h2>
+                
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-icon">⚡</div>
+                        <div class="plan-title">FCQ 01</div>
+                    </div>
+                    <div class="plan-stats">
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">දෛනික ආදායම</div>
+                            <div class="plan-stat-value">රු.400</div>
+                        </div>
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">මුළු ආදායම</div>
+                            <div class="plan-stat-value">රු.144,000</div>
+                        </div>
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">සේවා කාලය</div>
+                            <div class="plan-stat-value">360 දින</div>
+                        </div>
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">මිල</div>
+                            <div class="plan-stat-value">රු.5,000</div>
+                        </div>
+                    </div>
+                    <div class="plan-price" onclick="showPaymentModal('FCQ 01', 5000)">
+                        Rs5,000 - මිලදී ගන්න
+                    </div>
+                </div>
+
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-icon">💻</div>
+                        <div class="plan-title">FCQ 02</div>
+                    </div>
+                    <div class="plan-stats">
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">දෛනික ආදායම</div>
+                            <div class="plan-stat-value">රු.650</div>
+                        </div>
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">මුළු ආදායම</div>
+                            <div class="plan-stat-value">රු.234,000</div>
+                        </div>
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">සේවා කාලය</div>
+                            <div class="plan-stat-value">360 දින</div>
+                        </div>
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">මිල</div>
+                            <div class="plan-stat-value">රු.10,000</div>
+                        </div>
+                    </div>
+                    <div class="plan-price" onclick="showPaymentModal('FCQ 02', 10000)">
+                        Rs10,000 - මිලදී ගන්න
+                    </div>
+                </div>
+
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-icon">🚀</div>
+                        <div class="plan-title">FCQ 03</div>
+                    </div>
+                    <div class="plan-stats">
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">දෛනික ආදායම</div>
+                            <div class="plan-stat-value">රු.950</div>
+                        </div>
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">මුළු ආදායම</div>
+                            <div class="plan-stat-value">රු.342,000</div>
+                        </div>
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">සේවා කාලය</div>
+                            <div class="plan-stat-value">360 දින</div>
+                        </div>
+                        <div class="plan-stat">
+                            <div class="plan-stat-label">මිල</div>
+                            <div class="plan-stat-value">රු.15,000</div>
+                        </div>
+                    </div>
+                    <div class="plan-price" onclick="showPaymentModal('FCQ 03', 15000)">
+                        Rs15,000 - මිලදී ගන්න
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="investmentPage" class="page">
+            <div class="investment-header">
+                <h2>මගේ ආයෝජන</h2>
+            </div>
+
+            <div class="investment-summary">
+                <div class="summary-card">
+                    <div class="summary-label">දැනට ලැබුණු ආදායම</div>
+                    <div class="summary-value">රු.<span id="alreadyReturned">0</span></div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">දෛනික ආදායම</div>
+                    <div class="summary-value">රු.<span id="presentDailyIncome">0</span></div>
+                </div>
+            </div>
+
+            <div id="ordersList">
+                <!-- Orders will be dynamically added here -->
+            </div>
+        </div>
+
+        <div id="profilePage" class="page">
+            <div class="profile-header">
+                <h2>මගේ ගිණුම</h2>
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <div class="stat-label">ආයෝජන ආදායම</div>
+                        <div class="stat-value">රු.<span id="profileInvestmentReturn">0</span></div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="stat-label">යොමු ආදායම</div>
+                        <div class="stat-value">රු.<span id="profileReferralIncome">0</span></div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="stat-label">අවශේෂය</div>
+                        <div class="stat-value">රු.<span id="profileBalance">0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-list">
+                <div class="menu-item" onclick="showModal('bankAccountModal')">
+                    <span><span class="menu-icon">🏦</span> බැංකු ගිණුම</span>
+                    <span>></span>
+                </div>
+                <div class="menu-item" onclick="showModal('withdrawModal')">
+                    <span><span class="menu-icon">💸</span> මුදල් ඉවත් කිරීම</span>
+                    <span>></span>
+                </div>
+                <div class="menu-item" onclick="showModal('referralIncomeModal')">
+                    <span><span class="menu-icon">🔗</span> යොමු ආදායම</span>
+                    <span>></span>
+                </div>
+                <div class="menu-item" onclick="showModal('paymentHistoryModal')">
+                    <span><span class="menu-icon">📊</span> ගෙවීම් වාර්තාව</span>
+                    <span>></span>
+                </div>
+                <div class="menu-item" onclick="showModal('aboutModal')">
+                    <span><span class="menu-icon">ℹ️</span> සමාගම ගැන</span>
+                    <span>></span>
+                </div>
+                <div class="menu-item" onclick="showModal('profileModal')">
+                    <span><span class="menu-icon">👤</span> මගේ පැතිකඩ</span>
+                    <span>></span>
+                </div>
+                <div class="menu-item" onclick="showModal('referralLinkModal')">
+                    <span><span class="menu-icon">🔗</span> යොමු කිරීමේ සබැඳිය</span>
+                    <span>></span>
+                </div>
+                <div class="menu-item" onclick="logout()">
+                    <span><span class="menu-icon">🚪</span> ඉවත් වීම</span>
+                    <span>></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showPage('homePage')">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-text">මුල් පිටුව</div>
+        </div>
+        <div class="nav-item" onclick="showPage('investmentPage')">
+            <div class="nav-icon">📈</div>
+            <div class="nav-text">නිෂ්පාදන</div>
+        </div>
+        <div class="nav-item" onclick="showPage('profilePage')">
+            <div class="nav-icon">👤</div>
+            <div class="nav-text">මම</div>
+        </div>
+    </div>
+
+    <!-- Telegram Support Button -->
+    <div class="telegram-btn" onclick="window.open('https://t.me/+cZG0HLhsSE01M2M1', '_blank')">
+        💬
+    </div>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">පුරනය වන්න</h3>
+                <button class="close-btn" onclick="closeModal('loginModal')">&times;</button>
+            </div>
+            <form onsubmit="login(event)">
+                <div class="form-group">
+                    <label class="form-label">දුරකථන අංකය / විද්‍යුත් තැපැල්</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">මුරපදය</label>
+                    <input type="password" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">පුරනය වන්න</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">ලියාපදිංචි වන්න</h3>
+                <button class="close-btn" onclick="closeModal('signupModal')">&times;</button>
+            </div>
+            <form onsubmit="signup(event)">
+                <div class="form-group">
+                    <label class="form-label">නම</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">දුරකථන අංකය</label>
+                    <input type="tel" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">විද්‍යුත් තැපැල්</label>
+                    <input type="email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">මුරපදය</label>
+                    <input type="password" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">යොමු කේතය (විකල්ප)</label>
+                    <input type="text" class="form-input" id="referralCode" placeholder="යොමු කේතය">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">ලියාපදිංචි වන්න</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">මුදල් ගෙවීම</h3>
+                <button class="close-btn" onclick="closeModal('paymentModal')">&times;</button>
+            </div>
+            <div id="paymentDetails"></div>
+        </div>
+    </div>
+
+    <!-- Bank Account Modal -->
+    <div id="bankAccountModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">බැංකු ගිණුම එක් කරන්න</h3>
+                <button class="close-btn" onclick="closeModal('bankAccountModal')">&times;</button>
+            </div>
+            <form onsubmit="addBankAccount(event)">
+                <div class="form-group">
+                    <label class="form-label">බැංකු නාමය</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">ශාඛාව</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">ගිණුම් අංකය</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">නම</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">එක් කරන්න</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div id="withdrawModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">මුදල් ඉවත් කිරීම</h3>
+                <button class="close-btn" onclick="closeModal('withdrawModal')">&times;</button>
+            </div>
+            <form onsubmit="withdraw(event)">
+                <div class="form-group">
+                    <label class="form-label">ඉවත් කිරීමේ මුදල</label>
+                    <input type="number" class="form-input" min="500" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">බැංකු ගිණුම</label>
+                    <select class="form-input" required>
+                        <option value="">බැංකු ගිණුමක් තෝරන්න</option>
+                        <option value="dialog">Dialog Finance PLC</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">ඉල්ලීමක් කරන්න</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Referral Modal -->
+    <div id="referralModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">යොමු වැඩසටහන</h3>
+                <button class="close-btn" onclick="closeModal('referralModal')">&times;</button>
+            </div>
+            <div style="text-align: center; padding: 20px;">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Leval 1 - 20% රෙෆරල් බෝනස්!</h3>
+                <p style="margin-bottom: 20px;">ඔබේ මිතුරන් යොමු කරමින් අමතර ආදායමක් ලබාගන්න</p>
+                <button class="btn btn-primary" onclick="showModal('referralLinkModal')">යොමු සබැඳිය</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">FCQ සමාගම ගැන</h3>
+                <button class="close-btn" onclick="closeModal('aboutModal')">&times;</button>
+            </div>
+            <div style="padding: 20px;">
+                <p>FCQ යනු ශ්‍රී ලංකාවේ විශ්වාසනීය ආයෝජන ප්ලැට්ෆෝමයකි.</p>
+                <p style="margin-top: 15px;">අපගේ ඉලක්කය:</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>සරල ආයෝජන විසඳුම්</li>
+                    <li>දෛනික ආදායම්</li>
+                    <li>විශ්වාසනීය සේවාව</li>
+                    <li>24/7 සහාය</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">මගේ පැතිකඩ</h3>
+                <button class="close-btn" onclick="closeModal('profileModal')">&times;</button>
+            </div>
+            <div style="padding: 20px;">
+                <p><strong>විද්‍යුත් තැපැල්:</strong> <span id="userEmail">user@example.com</span></p>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="showModal('idModal')">හැඳුනුම්පත පෙන්වන්න</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ID Modal -->
+    <div id="idModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">මගේ හැඳුනුම්පත</h3>
+                <button class="close-btn" onclick="closeModal('idModal')">&times;</button>
+            </div>
+            <div style="padding: 20px; text-align: center;">
+                <p>UID: <span id="userId">u389363472817770496</span></p>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="copyToClipboard('userId')">පිටපත් කරන්න</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Referral Link Modal -->
+    <div id="referralLinkModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">යොමු කිරීමේ සබැඳිය</h3>
+                <button class="close-btn" onclick="closeModal('referralLinkModal')">&times;</button>
+            </div>
+            <div style="padding: 20px;">
+                <div class="copy-container">
+                    <input type="text" class="copy-text" id="referralLink" value="https://fcq.lk/ref/FCQ12345" readonly>
+                    <button class="copy-btn" onclick="copyToClipboard('referralLink')">පිටපත්</button>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="shareReferral()">සබැඳිය බෙදාගන්න</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Referral Income Modal -->
+    <div id="referralIncomeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">යොමු ආදායම</h3>
+                <button class="close-btn" onclick="closeModal('referralIncomeModal')">&times;</button>
+            </div>
+            <div style="padding: 20px;">
+                <h4>Leval 1 (20%)</h4>
+                <div id="referralList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment History Modal -->
+    <div id="paymentHistoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">ගෙවීම් වාර්තාව</h3>
+                <button class="close-btn" onclick="closeModal('paymentHistoryModal')">&times;</button>
+            </div>
+            <div id="paymentHistoryList" style="padding: 20px;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let balance = 0;
+        let investmentReturn = 0;
+        let referralIncome = 0;
+        let orders = [];
+        let paymentHistory = [];
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                updateUI();
+            }
+
+            // Load saved data
+            loadData();
+        });
+
+        // Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Set active nav item
+            if (pageId === 'homePage') {
+                document.querySelectorAll('.nav-item')[0].classList.add('active');
+            } else if (pageId === 'investmentPage') {
+                document.querySelectorAll('.nav-item')[1].classList.add('active');
+            } else if (pageId === 'profilePage') {
+                document.querySelectorAll('.nav-item')[2].classList.add('active');
+            }
+        }
+
+        // Modal functions
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Authentication
+        function login(event) {
+            event.preventDefault();
+            // Simulate login
+            currentUser = {
+                name: 'සම්පත් බණ්ඩාර',
+                email: 'sampath@example.com',
+                id: 'u389363472817770496'
+            };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            closeModal('loginModal');
+            updateUI();
+            showSuccess('පුරනය වීම සාර්ථකයි!');
+        }
+
+        function signup(event) {
+            event.preventDefault();
+            // Simulate signup
+            currentUser = {
+                name: event.target[0].value,
+                email: event.target[2].value,
+                id: 'u' + Date.now()
+            };
+            
+            // Add signup bonus
+            balance += 200;
+            paymentHistory.push({
+                type: 'Deposit',
+                amount: 200,
+                date: new Date().toLocaleDateString('si-LK'),
+                status: 'Completed'
+            });
+            
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            closeModal('signupModal');
+            updateUI();
+            showSuccess('ලියාපදිංචි වීම සාර්ථකයි! Rs200 බෝනස් ලැබුණා!');
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            balance = 0;
+            investmentReturn = 0;
+            referralIncome = 0;
+            orders = [];
+            paymentHistory = [];
+            updateUI();
+            showSuccess('ඔබ සාර්ථකව ඉවත් වුණා');
+        }
+
+        // Payment modal
+        function showPaymentModal(planName, amount) {
+            const modal = document.getElementById('paymentModal');
+            const details = document.getElementById('paymentDetails');
+            
+            let accountNumber = '001013143652';
+            let accountName = 'sampath bandara';
+            
+            if (amount === 10000) {
+                accountName = 'sampath Kumara';
+            }
+            
+            details.innerHTML = `
+                <div style="padding: 20px;">
+                    <div class="success-message" id="paymentSuccess" style="display: none;">
+                        ගෙවීම සාර්ථකයි! ඔබේ ගිණුමට Rs${amount} එකතු වුණා
+                    </div>
+                    <h4>${planName} - Rs${amount}</h4>
+                    <p style="margin: 15px 0;">කරුණාකර පහත බැංකු ගිණුමට මුදල් ගෙවන්න:</p>
+                    
+                    <div class="copy-container">
+                        <input type="text" class="copy-text" value="${accountNumber}" readonly>
+                        <button class="copy-btn" onclick="copyToClipboard(null, '${accountNumber}')">පිටපත්</button>
+                    </div>
+                    
+                    <div class="copy-container">
+                        <input type="text" class="copy-text" value="${accountName}" readonly>
+                        <button class="copy-btn" onclick="copyToClipboard(null, '${accountName}')">පිටපත්</button>
+                    </div>
+                    
+                    <div class="copy-container">
+                        <input type="text" class="copy-text" value="Dialog Finance PLC" readonly>
+                        <button class="copy-btn" onclick="copyToClipboard(null, 'Dialog Finance PLC')">පිටපත්</button>
+                    </div>
+                    
+                    <div class="copy-container">
+                        <input type="text" class="copy-text" value="Thabuththegama" readonly>
+                        <button class="copy-btn" onclick="copyToClipboard(null, 'Thabuththegama')">පිටපත්</button>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label class="form-label">ගෙවීම් ස්ලිප් එක උඩුගත කරන්න</label>
+                        <div class="file-upload">
+                            <input type="file" id="paymentSlip" accept="image/*" onchange="handleFileUpload(this, ${amount}, '${planName}')">
+                            <label class="file-upload-label" for="paymentSlip">
+                                📎 ස්ලිප් එක තෝරන්න
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="submitPayment(${amount}, '${planName}')">
+                        ඉදිරිපත් කරන්න
+                    </button>
+                </div>
+            `;
+            
+            showModal('paymentModal');
+        }
+
+        // Handle file upload
+        function handleFileUpload(input, amount, planName) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Store file data
+                    input.fileData = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Submit payment
+        function submitPayment(amount, planName) {
+            const fileInput = document.getElementById('paymentSlip');
+            if (!fileInput.fileData) {
+                alert('කරුණාකර ගෙවීම් ස්ලිප් එක උඩුගත කරන්න');
+                return;
+            }
+            
+            // Add to balance
+            balance += amount;
+            
+            // Add to payment history
+            paymentHistory.push({
+                type: 'Deposit',
+                amount: amount,
+                date: new Date().toLocaleDateString('si-LK'),
+                status: 'Completed'
+            });
+            
+            // Add order
+            const dailyIncome = amount === 5000 ? 400 : amount === 10000 ? 650 : 950;
+            orders.push({
+                id: 'ORD' + Date.now(),
+                plan: planName,
+                amount: amount,
+                dailyIncome: dailyIncome,
+                totalIncome: dailyIncome * 360,
+                days: 360,
+                currentDays: 0,
+                returned: 0,
+                status: 'Success',
+                date: new Date().toLocaleDateString('si-LK')
+            });
+            
+            updateUI();
+            saveData();
+            
+            // Show success
+            document.getElementById('paymentSuccess').style.display = 'block';
+            
+            setTimeout(() => {
+                closeModal('paymentModal');
+                showSuccess('ගෙවීම සාර්ථකයි! ඔබේ ගිණුමට Rs' + amount + ' එකතු වුණා');
+            }, 2000);
+        }
+
+        // Bank account
+        function addBankAccount(event) {
+            event.preventDefault();
+            showSuccess('බැංකු ගිණුම සාර්ථකව එකතු වුණා');
+            closeModal('bankAccountModal');
+        }
+
+        // Withdraw
+        function withdraw(event) {
+            event.preventDefault();
+            const amount = parseInt(event.target[0].value);
+            
+            if (amount > balance) {
+                alert('අවශේෂය ප්‍රමාණවත් නැහැ');
+                return;
+            }
+            
+            balance -= amount;
+            
+            paymentHistory.push({
+                type: 'Withdraw',
+                amount: amount,
+                date: new Date().toLocaleDateString('si-LK'),
+                status: 'Completed'
+            });
+            
+            updateUI();
+            saveData();
+            closeModal('withdrawModal');
+            showSuccess('මුදල් ඉවත් කිරීම සාර්ථකයි!');
+        }
+
+        // Copy to clipboard
+        function copyToClipboard(elementId, text) {
+            const textToCopy = text || document.getElementById(elementId).value;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showSuccess('පිටපත් වුණා!');
+            });
+        }
+
+        // Share referral
+        function shareReferral() {
+            const referralLink = document.getElementById('referralLink').value;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'FCQ යොමු සබැඳිය',
+                    text: 'FCQ වෙත එක් වන්න',
+                    url: referralLink
+                });
+            } else {
+                copyToClipboard('referralLink');
+            }
+        }
+
+        // Update UI
+        function updateUI() {
+            // Update balance
+            document.getElementById('balance').textContent = balance;
+            document.getElementById('investmentReturn').textContent = investmentReturn;
+            document.getElementById('referralIncome').textContent = referralIncome;
+            
+            // Update profile stats
+            document.getElementById('profileInvestmentReturn').textContent = investmentReturn;
+            document.getElementById('profileReferralIncome').textContent = referralIncome;
+            document.getElementById('profileBalance').textContent = balance;
+            
+            // Update user info
+            if (currentUser) {
+                document.getElementById('userEmail').textContent = currentUser.email;
+                document.getElementById('userId').textContent = currentUser.id;
+            }
+            
+            // Update orders
+            updateOrdersList();
+            
+            // Update payment history
+            updatePaymentHistory();
+        }
+
+        // Update orders list
+        function updateOrdersList() {
+            const ordersList = document.getElementById('ordersList');
+            ordersList.innerHTML = '';
+            
+            orders.forEach(order => {
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card fade-in';
+                orderCard.innerHTML = `
+                    <div class="order-header">
+                        <span class="order-number">ඇණවුම් අංකය: ${order.id}</span>
+                        <span class="order-status">${order.status}</span>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-detail">
+                            <div class="order-detail-label">මිල</div>
+                            <div class="order-detail-value">රු.${order.amount}</div>
+                        </div>
+                        <div class="order-detail">
+                            <div class="order-detail-label">දෛනික ආදායම</div>
+                            <div class="order-detail-value">රු.${order.dailyIncome}</div>
+                        </div>
+                        <div class="order-detail">
+                            <div class="order-detail-label">මුළු ආදායම</div>
+                            <div class="order-detail-value">රු.${order.totalIncome}</div>
+                        </div>
+                        <div class="order-detail">
+                            <div class="order-detail-label">සේවා කාලය</div>
+                            <div class="order-detail-value">${order.currentDays}/${order.days} දින</div>
+                        </div>
+                        <div class="order-detail" style="grid-column: 1 / -1;">
+                            <div class="order-detail-label">දැනට ලැබුණු ආදායම</div>
+                            <div class="order-detail-value">රු.${order.returned}</div>
+                        </div>
+                    </div>
+                `;
+                ordersList.appendChild(orderCard);
+            });
+            
+            // Update summary
+            const totalReturned = orders.reduce((sum, order) => sum + order.returned, 0);
+            const totalDailyIncome = orders.reduce((sum, order) => sum + order.dailyIncome, 0);
+            
+            document.getElementById('alreadyReturned').textContent = totalReturned;
+            document.getElementById('presentDailyIncome').textContent = totalDailyIncome;
+        }
+
+        // Update payment history
+        function updatePaymentHistory() {
+            const historyList = document.getElementById('paymentHistoryList');
+            historyList.innerHTML = '';
+            
+            if (paymentHistory.length === 0) {
+                historyList.innerHTML = '<p style="text-align: center; color: #666;">ගෙවීම් වාර්තාවක් නැහැ</p>';
+                return;
+            }
+            
+            paymentHistory.forEach(record => {
+                const recordDiv = document.createElement('div');
+                recordDiv.className = 'order-card';
+                recordDiv.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: bold; color: ${record.type === 'Deposit' ? '#10b981' : '#ef4444'};">
+                                ${record.type === 'Deposit' ? '+' : '-'} රු.${record.amount}
+                            </div>
+                            <div style="font-size: 12px; color: #666;">${record.date}</div>
+                        </div>
+                        <div style="color: #10b981; font-weight: bold;">${record.status}</div>
+                    </div>
+                `;
+                historyList.appendChild(recordDiv);
+            });
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            document.body.insertBefore(successDiv, document.body.firstChild);
+            
+            setTimeout(() => {
+                successDiv.remove();
+            }, 3000);
+        }
+
+        // Save data
+        function saveData() {
+            localStorage.setItem('fcqBalance', balance);
+            localStorage.setItem('fcqInvestmentReturn', investmentReturn);
+            localStorage.setItem('fcqReferralIncome', referralIncome);
+            localStorage.setItem('fcqOrders', JSON.stringify(orders));
+            localStorage.setItem('fcqPaymentHistory', JSON.stringify(paymentHistory));
+        }
+
+        // Load data
+        function loadData() {
+            balance = parseInt(localStorage.getItem('fcqBalance') || '0');
+            investmentReturn = parseInt(localStorage.getItem('fcqInvestmentReturn') || '0');
+            referralIncome = parseInt(localStorage.getItem('fcqReferralIncome') || '0');
+            orders = JSON.parse(localStorage.getItem('fcqOrders') || '[]');
+            paymentHistory = JSON.parse(localStorage.getItem('fcqPaymentHistory') || '[]');
+            
+            updateUI();
+        }
+
+        // Simulate daily income
+        setInterval(() => {
+            if (orders.length > 0) {
+                orders.forEach(order => {
+                    if (order.currentDays < order.days) {
+                        order.currentDays++;
+                        order.returned += order.dailyIncome;
+                        balance += order.dailyIncome;
+                        investmentReturn += order.dailyIncome;
+                    }
+                });
+                updateUI();
+                saveData();
+            }
+        }, 10000); // Every 10 seconds for demo (normally would be daily)
+
+        // Close modals on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
